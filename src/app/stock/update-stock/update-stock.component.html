@@ -1,0 +1,55 @@
+<h1>Update</h1>
+<div class="form-update">
+    <form [formGroup]="updateForm">
+        <div class="stock-name">
+            <label for="">Stock Code:</label>
+            <input type="text" name="stock-code" placeholder="Stock Code" formControlName="stockCode">
+            <div *ngIf="updateForm.get('stock-code')?.invalid && updateForm.get('stock-code')?.dirty">
+                Name is required
+            </div>
+        </div>
+        <div class="stock-name">
+            <label for="">Stock Name:</label>
+            <input type="text" name="stockName" placeholder="Stock Name" formControlName="stockName">
+            <div *ngIf="updateForm.get('stockName')?.invalid && updateForm.get('stockName')?.dirty">
+                Name is required
+            </div>
+        </div>
+        <div class="stock-price">
+            <label for="">Stock Price:</label>
+            <input type="text" name="stockPrice" placeholder="Stock Price" formControlName="stockPrice">
+            <div *ngIf="updateForm.get('stockPrice')?.invalid && 
+        (updateForm.get('stockPrice')?.touched || updateForm.get('stockPrice')?.dirty)">
+                <div *ngIf="updateForm.get('stockPrice')?.errors?.['required']">
+                    Price is required
+                </div>
+                <div *ngIf="updateForm.get('stockPrice')?.errors?.['min']">
+                    Price must be positive
+                </div>
+            </div>
+        </div>
+        <div class="stock-previous-price">
+            <label for="">Stock Previous Price</label>
+            <input type="text" name="stockPreviousPrice" placeholder="Stock Price" formControlName="stockPreviousPrice">
+            <div *ngIf="updateForm.get('stockPreviousPrice')?.invalid && 
+        (updateForm.get('stockPreviousPrice')?.touched || updateForm.get('stockPreviousPrice')?.dirty)">
+                <div *ngIf="updateForm.get('stockPreviousPrice')?.errors?.['required']">
+                    Price is required
+                </div>
+                <div *ngIf="updateForm.get('stockPreviousPrice')?.errors?.['min']">
+                    Price must be positive
+                </div>
+            </div>
+        </div>
+        <div class="stock-exchange">
+            <label for="stock-exchange">Select Stock Exchange:</label>
+            <select name="card" id="stock-exchange" formControlName="stockExchange">
+                <option *ngFor="let exchange of exchanges" [ngValue]="exchange">
+                    {{ exchange }}
+                </option>
+            </select>
+        </div>
+        <button type="submit" (click)="onUpdateStock()" [disabled]="DisableUpdate()">Submit</button>
+        <button type="button" (click)="onCancel()">Cancel</button>
+    </form>
+</div>

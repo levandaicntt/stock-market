@@ -1,0 +1,64 @@
+/* Reset mặc định */
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.stock-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.single-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+/* Điều chỉnh kích thước các cột */
+.name { flex: 1.8; }      /* Giảm nhẹ Name */
+.code { flex: 1; }        /* Code nhỏ hơn */
+.exchange, 
+.price { flex: 1.3; }     /* Exchange & Price */
+.favorite-btn, 
+.delete-btn, 
+.update-btn, 
+.information-btn { flex: 1; text-align: center; } /* Các nút */
+
+/* Thêm đường ngăn cách giữa các cột, trừ các nút */
+.name, .code, .exchange, .price {
+    padding: 5px 10px;
+    text-align: center;
+    border-right: 1px solid #ccc;
+}
+
+/* Định dạng màu giá */
+.price.positive { color: green; }
+.price.negative { color: red; }
+
+/* Căn chỉnh nút */
+button {
+    padding: 5px 10px;
+    cursor: pointer;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Tăng kích thước nút "Remove from favorite" */
+.favorite-btn button:last-child {
+    padding: 6px 15px;
+    font-size: 15px;
+}
+.mat-mdc-dialog-container .mdc-dialog .cdk-dialog-container .mdc-dialog--open {
+    background-color: white;
+  }

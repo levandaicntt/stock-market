@@ -1,0 +1,36 @@
+<ul>
+    <li class="stock-item">
+        <div class="single-row">
+            <div class="name">{{ stock.name }}</div>
+            <div class="code">{{ stock.code }}</div>
+            <div class="exchange">{{ stock.exchange }}</div>
+            <div class="price" [ngClass]="{ 'positive': stock.isPositiveChange, 'negative': !stock.isPositiveChange }">
+                $ {{ stock.price }}
+            </div>
+            <div class="favorite-btn">
+                <button (click)="toggleFavorite()" [hidden]="stock.favorite">
+                    Add to favorite
+                </button>
+                <button (click)="toggleUnFavorite()" [hidden]="!stock.favorite">
+                    Remove from favorite
+                </button>
+            </div>
+            <div class="delete-btn">
+                <button (click)="deleteStock()">
+                    Delete
+                </button>
+            </div>
+            <div class="update-btn">
+                <button mat-raised-button (click)="updateStock()">
+                    Update
+                </button>
+                <!-- <div class="update">
+                    <app-update-stock [hidden]="!update" (updateStock)="onStockUpdate()"></app-update-stock>
+                </div> -->
+            </div>
+            <div class="information-btn">
+                <button mat-raised-button (click)="showInformation()">Information</button>
+            </div>
+        </div>
+    </li>
+</ul>

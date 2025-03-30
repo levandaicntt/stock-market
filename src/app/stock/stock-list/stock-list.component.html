@@ -1,0 +1,16 @@
+<div class="view-mode">
+    <label for="view-select">Chế độ xem:</label>
+    <select id="view-select" title="Filter stocks" (change)="onChangeView($event)">
+        <option value="Item">Item</option>
+        <option value="Listview">Listview</option>
+    </select>
+</div>
+
+<div class="stock-item" *ngIf="viewmode === 'Item'">
+    <app-stock-item *ngFor="let stock of stocks | async" [stock]="stock"
+        (toggleFavorite)="onToggleFavorite(stock)"></app-stock-item>
+</div>
+<div class="stock-listview" *ngIf="viewmode === 'Listview'">
+    <app-stock-listview *ngFor="let stock of stocks | async" [stock]="stock"
+        (toggleFavorite)="onToggleFavorite(stock)"></app-stock-listview>
+</div>

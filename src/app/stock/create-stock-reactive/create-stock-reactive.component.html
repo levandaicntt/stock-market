@@ -1,0 +1,50 @@
+<!-- reactive form group/builder -->
+<h1>Reactive</h1>
+<div class="form-group">
+    <form [formGroup]="stockForm">
+        <div class="stock-name">
+            <input type="text" name="stockName" placeholder="Stock Name" formControlName="stockName">
+            <div *ngIf="stockForm.get('stockName')?.invalid && stockForm.get('stockName')?.dirty">
+                Name is required
+            </div>
+        </div>
+
+        <div class="stock-code">
+            <input type="text" name="stockCode" placeholder="Stock Code" formControlName="stockCode">
+            <div *ngIf="stockForm.get('stockCode')?.invalid && stockForm.get('stockCode')?.dirty">
+                <div *ngIf="stockForm.get('stockCode')?.errors?.['required']">
+                    Code is required
+                </div>
+                <div *ngIf="stockForm.get('stockCode')?.errors?.['minlength']">
+                    Code should be at least 2 characters
+                </div>
+            </div>
+        </div>
+
+        <div class="stock-price">
+            <input type="text" name="stockPrice" placeholder="Stock Price" formControlName="stockPrice">
+            <div *ngIf="stockForm.get('stockPrice')?.invalid && 
+        (stockForm.get('stockPrice')?.touched || stockForm.get('stockPrice')?.dirty)">
+                <div *ngIf="stockForm.get('stockPrice')?.errors?.['required']">
+                    Price is required
+                </div>
+                <div *ngIf="stockForm.get('stockPrice')?.errors?.['min']">
+                    Price must be positive
+                </div>
+            </div>
+        </div>
+
+        <div class="stock-exchange">
+            <label for="stock-exchange">Select Stock Exchange:</label>
+            <select name="card" id="stock-exchange" formControlName="stockExchange">
+                <option *ngFor="let exchange of exchanges" [ngValue]="exchange">
+                    {{ exchange }}
+                </option>
+            </select>
+        </div>
+
+        <button type="submit" (click)="onSubmit()" [disabled]="DisableSubmit()">Submit</button>
+    </form>
+</div>
+<h4>Form control value: {{stockForm.value | json}}</h4>
+<h4>Form Control status: {{stockForm.status | json}}</h4>
