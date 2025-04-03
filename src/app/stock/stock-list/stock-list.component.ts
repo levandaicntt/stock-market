@@ -1,58 +1,33 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Stock } from '../../model/stock';
-import { StockItemComponent } from "../stock-item/stock-item.component";
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { StockService } from '../../services/stock.service';
+import { Observable } from 'rxjs';
 import { StockListviewComponent } from '../stock-listview/stock-listview.component';
-import { Observable, of } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-stock-list',
   templateUrl: './stock-list.component.html',
   styleUrls: ['./stock-list.component.css'],
-  imports: [CommonModule, StockItemComponent,StockListviewComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  imports: [StockListviewComponent, AsyncPipe, CommonModule]
 })
 export class StockListComponent implements OnInit, OnChanges {
-  @Input() stockCode!: string;
-  public stocks: Observable < Stock[] > | undefined;
-  public viewmode: string = "Item";
-  
-  constructor(private stocksService: StockService) {}
+  public stocks$!: Observable<Stock[]>;
+  @Input() stockCode: string = '';
+  constructor(private stockService: StockService) { }
 
   ngOnInit(): void {
-    // this.stocks = [
-    //   new Stock('Test Stock Company', 'TSC', 85, 80, 'OKX'),
-    //   new Stock('Second Stock Company', 'SSC', 10, 20, 'NASDAQ'),
-    //   new Stock('Third Stock Company', 'TSC', 85, 80, 'NSE'),
-    // ];
-    this.stocks = this.stocksService.getStocks();
+    this.loadStocks();
+    this.stockService.refreshStocks$.subscribe(() => this.loadStocks());
   }
 
-  ngOnChanges(): void {
-    console.log(this.stockCode);
-    this.findStocks(this.stockCode);
+  loadStocks(): void {
+    this.stocks$ = this.stockService.getStocks();
   }
 
-  onToggleFavorite(stock: Stock) {
-    console.log('Favorite for stock', stock, 'was triggered');
-    // stock.favorite = !stock.favorite;
-    this.stocksService.toggleFavorite(stock);
-  }
-  
-  findStocks(code: string): void {
-    if (code) {
-      const stock = this.stocksService.findStock(code);
-      this.stocks = stock ? of([stock]) : of([]);
-    } else if (code === '' || code === null) {
-      this.stocks = this.stocksService.getStocks();
-    } else {
-      alert('Không có mã cổ phiếu tên ' + code);
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['stockCode']) {
+      this.loadStocks();
     }
-  }
-
-  onChangeView(event: Event){
-    const mode = event.target as HTMLSelectElement;
-    this.viewmode = mode.value;
   }
 }

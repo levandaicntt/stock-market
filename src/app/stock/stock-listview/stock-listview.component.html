@@ -4,14 +4,16 @@
             <div class="name">{{ stock.name }}</div>
             <div class="code">{{ stock.code }}</div>
             <div class="exchange">{{ stock.exchange }}</div>
-            <div class="price" [ngClass]="{ 'positive': stock.isPositiveChange, 'negative': !stock.isPositiveChange }">
+            <!-- <div class="price" [ngClass]="{ 'positive': stock.isPositiveChange, 'negative': !stock.isPositiveChange }"> -->
+            <div class="price" [class.positive]="stock.price > stock.previousPrice"
+                [class.negative]="stock.price <= stock.previousPrice">
                 $ {{ stock.price }}
             </div>
             <div class="favorite-btn">
-                <button (click)="toggleFavorite()" [hidden]="stock.favorite">
+                <button (click)="toggleFavorite()" [hidden]="!stock.favorite">
                     Add to favorite
                 </button>
-                <button (click)="toggleUnFavorite()" [hidden]="!stock.favorite">
+                <button (click)="toggleFavorite()" [hidden]="stock.favorite">
                     Remove from favorite
                 </button>
             </div>

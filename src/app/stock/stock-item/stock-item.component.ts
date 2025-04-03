@@ -15,24 +15,24 @@ import { MatDialogModule } from '@angular/material/dialog';
   imports: [CommonModule]
 })
 export class StockItemComponent {
-  @Input() stock: Stock = { 
-    name: '', 
-    code: '', 
-    exchange: '', 
-    price: 0, 
+  @Input() stock: Stock = {
+    name: '',
+    code: '',
+    exchange: '',
+    price: 0,
     previousPrice: 0,
-    favorite: false, 
-    isPositiveChange: () => false // Ensure this is a function
+    favorite: false,
+    // isPositiveChange: () => false // Ensure this is a function
   };
   public update: boolean = false;
   public info: boolean = false;
   constructor(private stockService: StockService,
-              private dialog: MatDialog, // Optional dialog injection
+    private dialog: MatDialog, // Optional dialog injection
   ) {
-    
+
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   toggleFavorite() {
     this.stock.favorite = !this.stock.favorite;
@@ -45,11 +45,11 @@ export class StockItemComponent {
   }
 
   deleteStock() {
-    this.stockService.deleteStock(this.stock.code);
+    // this.stockService.deleteStock(this.stock);
     alert('You have deleted ' + this.stock.name);
   }
 
-  updateStock(){
+  updateStock() {
     this.dialog.open(UpdateStockComponent, {
       data: this.stock, // truyền dữ liệu stock vào dialog
       width: 'auto',
@@ -67,13 +67,13 @@ export class StockItemComponent {
   //   // console.log(this.stock);
   // }
 
-  showInformation(){
+  showInformation() {
     this.dialog.open(StockInformationComponent, {
       data: this.stock, // truyền dữ liệu stock vào dialog
       width: 'auto',
       height: 'auto',
     },
-)
+    )
     // this.info = !this.info;
   }
 }

@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./create-stock.component.css'],
 })
 export class CreateStockComponent {
-  public stock: Stock = new Stock('', '', 0, 0, 'OKX');
+  public stock!: Stock;
   public confirmed = false;
   public exchanges = ['NYSE', 'NASDAQ', 'OKX', 'OTHER'];
   public stocks: Stock[] = [];
@@ -20,7 +20,6 @@ export class CreateStockComponent {
     console.log('Stock Form', stockForm);
     if (stockForm.valid) {
       this.stocks.push(this.stock);
-      this.stock = new Stock('', '', 0, 0, 'OKX');
       this.confirmed = false;
       stockForm.resetForm();
     }

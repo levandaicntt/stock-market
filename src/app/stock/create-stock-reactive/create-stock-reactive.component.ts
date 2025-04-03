@@ -1,73 +1,46 @@
 import { Component } from '@angular/core';
-import { Stock } from '../../model/stock';
-import { FormsModule, NgForm, FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { HttpServiceService } from '../../services/http-service.service';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-import { StockService } from '../../services/stock.service';
-import e from 'express';
-
-let counter = 1;
 
 @Component({
-selector: 'app-create-stock-reactive',
-  imports: [FormsModule, CommonModule, ReactiveFormsModule],
+  selector: 'app-create-stock-reactive',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './create-stock-reactive.component.html',
-  styleUrl: './create-stock-reactive.component.css',
-  standalone: true
+  styleUrls: ['./create-stock-reactive.component.css']
 })
-
 export class CreateStockReactiveComponent {
-  //reactive form builder
-  public stockForm!: FormGroup;
-  public exchanges!: string[];
-  private stock!: Stock;
-  constructor(private fb: FormBuilder,
-              private stockService: StockService
-  ) {
-    this.exchanges = this.stockService.exchange;
-    this.createStockForm();
-  }
+  public stockForm: FormGroup;
+  public exchanges: string[] = ['NASDAQ', 'NYSE', 'OKX', 'NSE'];
 
-  createStockForm() {
+  constructor(private fb: FormBuilder, private httpService: HttpServiceService) {
     this.stockForm = this.fb.group({
-      stockName: [null, [Validators.required]],
-      stockCode: [null, [Validators.required, Validators.minLength(2)]],
-      stockPrice: [null, [Validators.required, Validators.min(0)]],
-      stockExchange: ['OTHER', [Validators.required]],
+      stockName: ['', Validators.required],
+      stockCode: ['', Validators.required],
+      stockPrice: [0, [Validators.required, Validators.min(0)]],
+      stockPreviousPrice: [0, [Validators.required, Validators.min(0)]],
+      stockExchange: ['', Validators.required]
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.stockForm.valid) {
-      let newStock = new Stock(
-        this.stockForm.value.stockName,
-        this.stockForm.value.stockCode,
-        this.stockForm.value.stockPrice,
-        0,
-        this.stockForm.value.stockExchange
-      )
-      this.stockService.createStock(newStock)
-      .subscribe((result:any) => {
-          console.log(result.msg);
-          this.stock = new Stock('', '', 0, 0, 'OTHER');
-        }, (err) =>{
-          console.log(err);
-        });
-    } else {
-      console.error('Please correct the validation errors.');
+      this.httpService.postStocks(this.stockForm.value).subscribe({
+        next: (res) => {
+          alert('Cổ phiếu được tạo thành công');
+          // Sau khi tạo thành công, bạn có thể phát ra sự kiện để component cha load lại danh sách stocks
+          this.stockForm.reset();
+        },
+        error: (err) => {
+          console.error(err);
+          alert('Có lỗi khi tạo cổ phiếu');
+        }
+      });
     }
-    // alert('Create complete');
-    // let formValue = new Stock(this.stockForm.value.stockName, this.stockForm.value.stockCode, this.stockForm.value.stockPrice, this.stockForm.value.previousPrice, this.stockForm.value.stockExchange);
-    // formValue.previousPrice = 0;
-    // this.stockService.createStock(formValue);
-    // this.resetForm();
   }
 
-  DisableSubmit() {
+  DisableSubmit(): boolean {
     return this.stockForm.invalid;
-  }
-
-  resetForm(){
-    this.stockForm.reset();
   }
 }

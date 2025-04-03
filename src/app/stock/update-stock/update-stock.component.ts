@@ -15,18 +15,18 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/materia
 export class UpdateStockComponent implements OnInit {
   // @Input() stock!: Stock;
   // @Input() update!: boolean;
-  
+
 
   public updateForm!: FormGroup;
   public exchanges!: string[];
 
   constructor(private fb: FormBuilder,
-              private stockService: StockService,
-              @Optional() public dialogRef: MatDialogRef<UpdateStockComponent>,
-              @Optional() @Inject(MAT_DIALOG_DATA) public stock: Stock
-            ) {
+    private stockService: StockService,
+    @Optional() public dialogRef: MatDialogRef<UpdateStockComponent>,
+    @Optional() @Inject(MAT_DIALOG_DATA) public stock: Stock
+  ) {
 
-              this.exchanges = this.stockService.exchange;
+    // this.exchanges = this.stockService.exchange;
   }
 
   ngOnInit(): void {
@@ -46,21 +46,21 @@ export class UpdateStockComponent implements OnInit {
   onUpdateStock(): void {
     let oldStock = this.stock.name;
     let updatedStock = this.updateForm.value;
-    let newStock = new Stock(
-      updatedStock.stockName,
-      updatedStock.stockCode,
-      updatedStock.stockPrice,
-      updatedStock.stockPreviousPrice,
-      updatedStock.stockExchange
-    );
-    console.log(newStock);
-    if(this.stockService.updateStock(newStock)){
-      alert('ok');
-      this.dialogRef.close();
-    }
-    else{
-      alert('error');
-    }
+    // let newStock = new Stock(
+    //   updatedStock.stockName,
+    //   updatedStock.stockCode,
+    //   updatedStock.stockPrice,
+    //   updatedStock.stockPreviousPrice,
+    //   updatedStock.stockExchange
+    // );
+    // console.log(newStock);
+    // if (this.stockService.updateStock(newStock)) {
+    //   alert('ok');
+    //   this.dialogRef.close();
+    // }
+    // else {
+    //   alert('error');
+    // }
   }
 
   DisableUpdate(): boolean {

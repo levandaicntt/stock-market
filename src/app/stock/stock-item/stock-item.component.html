@@ -3,9 +3,9 @@
     <h1>Welcome to Stock Market App!</h1>
     <div class="name">{{ stock.name }} - ({{ stock.code }})</div>
     <div class="exchange">{{ stock.exchange }}</div>
-    <div class="price" [ngClass]="{ 'positive': stock.isPositiveChange, 'negative': !stock.isPositiveChange }">
+    <!-- <div class="price" [ngClass]="{ 'positive': stock.isPositiveChange, 'negative': !stock.isPositiveChange }">
       $ {{ stock.price }}
-    </div>
+    </div> -->
     <div class="favorite-btn">
       <button (click)="toggleFavorite()" [hidden]="stock.favorite">
         Add to favorite

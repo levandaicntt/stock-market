@@ -1,74 +1,54 @@
 import { Injectable } from '@angular/core';
+import { Observable, throwError } from 'rxjs';
 import { Stock } from '../model/stock';
-import { OnInit } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { HttpServiceService } from './http-service.service';
+import { tap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class StockService implements OnInit {
-  public stocks: Stock[] = [];
-  public exchange: string[] = ['NYSE', 'NASDAQ', 'OKX', 'OTHER'];
-  ngOnInit(): void {
-    
-    
-  }
-  
-  constructor(){
-    this.stocks = [
-      new Stock('Test Stock Company', 'TSC', 85, 80, 'OKX'),
-      new Stock('Second Stock Company', 'SSC', 10, 20, 'NASDAQ'),
-      new Stock('Third Stock Company', 'TSC', 85, 80, 'NYSE'),
-    ];
-  }
+export class StockService {
+  private refreshStocks = new Subject<void>();
 
-  getStocks(): Observable<Stock[]> {
-    return of(this.stocks);
+  constructor(private httpService: HttpServiceService) { }
+
+  // stock.service.ts
+
+  getStocks(code?: string): Observable<Stock[]> {
+    return this.httpService.getStocks(code);
   }
 
   createStock(stock: Stock): Observable<any> {
-    let foundStock = this.stocks.find(each => each.code === stock.code);
-    if (foundStock) {
-      return throwError(() => new Error('Stock with code ' + stock.code + ' already exists'));
-    }
-    this.stocks.push(stock);
-    return of({ msg: 'Stock with code' + stock.code + ' created successfully' });
+    return this.httpService.postStocks(stock).pipe(
+      tap(() => this.refreshStocks.next())
+    );
   }
 
-  toggleFavorite(stock: Stock){
-    let foundStock = this.stocks.find(each => each.code === stock.code);
-    if (foundStock) {
-      foundStock.favorite = !foundStock.favorite;
-    }
+  toggleFavorite(stock: Stock): Observable<Stock> {
+    const updatedStock = { ...stock, favorite: !stock.favorite };
+    return this.httpService.updateStock(updatedStock.id!, updatedStock).pipe(
+      tap(() => this.refreshStocks.next())
+    );
   }
 
-  findIndexStock(code: string): number | undefined {
-    return this.stocks.findIndex(stock => stock.code === code);
+  deleteStock(id: number): Observable<any> {
+    return this.httpService.deleteStock(id).pipe(
+      tap(() => this.refreshStocks.next())
+    );
   }
 
-  findStock(code: string): Stock | undefined {
-    let index = this.findIndexStock(code);
-    if (index !== undefined && index >= 0) {
-      return this.stocks[index];
-    }
-    return undefined;
+  updateStock(stock: Stock): Observable<any> {
+    return this.httpService.updateStock(stock.id!, stock).pipe(
+      tap(() => this.refreshStocks.next())
+    );
   }
 
-  deleteStock(code: string): boolean {
-    let index = this.findIndexStock(code);
-    if (index !== undefined && index >= 0) {
-      this.stocks.splice(index, 1);
-      return true;
-    }
-    return false;
-  }
+  // searchStocks(code: string): Observable<Stock[]> {
+  //   return this.httpService.get<Stock[]>(`${this.apiUrl}/stocks?code_like=${code}`);
+  // }
 
-  updateStock(stock: Stock): boolean {
-    let index = this.findIndexStock(stock.code);
-    if (index !== undefined && index >= 0) {
-      this.stocks[index] = stock;
-      return true;
-    }
-    return false;
+  get refreshStocks$() {
+    return this.refreshStocks.asObservable();
   }
 }

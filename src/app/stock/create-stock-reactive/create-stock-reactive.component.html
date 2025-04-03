@@ -1,7 +1,7 @@
 <!-- reactive form group/builder -->
 <h1>Reactive</h1>
 <div class="form-group">
-    <form [formGroup]="stockForm">
+    <form [formGroup]="stockForm" (ngSubmit)="onSubmit()">
         <div class="stock-name">
             <input type="text" name="stockName" placeholder="Stock Name" formControlName="stockName">
             <div *ngIf="stockForm.get('stockName')?.invalid && stockForm.get('stockName')?.dirty">
@@ -36,15 +36,15 @@
 
         <div class="stock-exchange">
             <label for="stock-exchange">Select Stock Exchange:</label>
-            <select name="card" id="stock-exchange" formControlName="stockExchange">
+            <select name="stockExchange" id="stock-exchange" formControlName="stockExchange">
                 <option *ngFor="let exchange of exchanges" [ngValue]="exchange">
                     {{ exchange }}
                 </option>
             </select>
         </div>
 
-        <button type="submit" (click)="onSubmit()" [disabled]="DisableSubmit()">Submit</button>
+        <button type="submit" [disabled]="DisableSubmit()">Submit</button>
     </form>
 </div>
-<h4>Form control value: {{stockForm.value | json}}</h4>
-<h4>Form Control status: {{stockForm.status | json}}</h4>
+<h4>Form control value: {{ stockForm.value | json }}</h4>
+<h4>Form Control status: {{ stockForm.status | json }}</h4>

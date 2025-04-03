@@ -1,7 +1,7 @@
 <form [formGroup]="searchForm">
     <label for="search-input">Search:</label>
     <input type="text" name="search" id="search-input" placeholder="Enter search term" formControlName="search">
-    <!-- <button type="button" (click)="searchStock()">Search</button> -->
+    <button type="button" (click)="searchStock()">Search</button>
     <button type="button" (click)="resetForm()">Reset</button>
 </form>
-<app-stock-list [stockCode]="searchStock()"></app-stock-list>
+<app-stock-list [stockCode]="searchCode"></app-stock-list>

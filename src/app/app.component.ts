@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './user/login/login.component';
 import { StockItemComponent } from './stock/stock-item/stock-item.component';
 import { CreateStockComponent } from './stock/create-stock/create-stock.component';
 import { CreateStockReactiveComponent } from './stock/create-stock-reactive/create-stock-reactive.component';
@@ -18,7 +18,7 @@ import { SearchStockComponent } from './stock/search-stock/search-stock.componen
     ReactiveFormsModule,
     CreateStockReactiveComponent,
     SearchStockComponent,
-],
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
