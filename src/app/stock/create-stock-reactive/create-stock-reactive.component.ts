@@ -16,16 +16,18 @@ export class CreateStockReactiveComponent {
 
   constructor(private fb: FormBuilder, private httpService: HttpServiceService) {
     this.stockForm = this.fb.group({
-      stockName: ['', Validators.required],
-      stockCode: ['', Validators.required],
-      stockPrice: [0, [Validators.required, Validators.min(0)]],
-      stockPreviousPrice: [0, [Validators.required, Validators.min(0)]],
-      stockExchange: ['', Validators.required]
+      name: ['', Validators.required],
+      code: ['', Validators.required],
+      price: [0, [Validators.required, Validators.min(0)]],
+      previousPrice: [0, [Validators.required, Validators.min(0)]],
+      exchange: ['', Validators.required],
+      favorite: [false]
     });
   }
 
   onSubmit(): void {
     if (this.stockForm.valid) {
+
       this.httpService.postStocks(this.stockForm.value).subscribe({
         next: (res) => {
           alert('Cổ phiếu được tạo thành công');

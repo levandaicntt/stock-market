@@ -16,7 +16,8 @@ export class StockService {
   // stock.service.ts
 
   getStocks(code?: string): Observable<Stock[]> {
-    return this.httpService.getStocks(code);
+    console.log(this.httpService.getStocks(code))
+    return this.httpService.getStocks(code)
   }
 
   createStock(stock: Stock): Observable<any> {

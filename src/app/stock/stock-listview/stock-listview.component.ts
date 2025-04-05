@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { UpdateStockComponent } from '../update-stock/update-stock.component';
 import { StockInformationComponent } from '../stock-information/stock-information.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-stock-listview',
@@ -17,12 +18,14 @@ export class StockListviewComponent {
 
   constructor(
     private stockService: StockService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) { }
 
   ngOnInit() { }
 
   toggleFavorite() {
+    console.log(this.stock)
     this.stockService.toggleFavorite(this.stock).subscribe({
       next: (res) => {
         this.stock.favorite = !this.stock.favorite;
@@ -62,5 +65,11 @@ export class StockListviewComponent {
       autoFocus: false,
       disableClose: true,
     });
+  }
+
+  goToDetails(id: number | undefined) {
+    if (id) {
+      this.router.navigate(['/stocks', id]);
+    }
   }
 }

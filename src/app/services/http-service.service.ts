@@ -17,11 +17,16 @@ export class HttpServiceService {
 
   // Lấy danh sách stocks từ API
 
+
+  public getStockList(): Observable<any> {
+    let url = `${this.REST_API_SERVER}/stocks`;
+    return this.httpClient.get<any>(url, this.httpOption);
+  }
+
+
   public getStocks(code?: string): Observable<any> {
     let url = `${this.REST_API_SERVER}/stocks`;
-    if (code) {
-      url += `?code_like=${encodeURIComponent(code)}`;
-    }
+
     return this.httpClient.get<any>(url, this.httpOption);
   }
 

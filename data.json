@@ -1,84 +1,57 @@
 {
   "stocks": [
     {
-      "id": "1",
-      "name": "Test Stock Company",
-      "code": "TSC",
-      "price": "85",
-      "previousPrice": "80",
-      "exchange": "NASDAQ",
+      "id": "3",
+      "name": "Last Stock Company",
+      "code": "LSC",
+      "price": 132,
+      "previousPrice": 0,
+      "exchange": "NYSE",
       "favorite": true
     },
     {
-      "id": "2",
-      "name": "Second Stock Company",
-      "code": "SSC",
-      "price": "10",
-      "previousPrice": "20",
+      "name": "Last Stock Company",
+      "code": "LSC",
+      "price": 1,
+      "previousPrice": "765",
+      "exchange": "NYSE",
+      "favorite": true,
+      "id": "4"
+    },
+    {
+      "id": "8f3f",
+      "name": "123",
+      "code": "123",
+      "price": "123",
+      "previousPricd": 0,
       "exchange": "NSE",
       "favorite": true
     },
     {
-      "id": "3",
-      "name": "Last Stock Company",
-      "code": "LSC",
-      "price": "876",
-      "previousPrice": "765",
-      "exchange": "NYSE",
+      "id": "26b5",
+      "name": "123",
+      "code": "123",
+      "price": "0123",
+      "previousPrice": 0,
+      "exchange": "OKX",
       "favorite": true
     },
     {
-      "name": "Last Stock Company",
-      "code": "LSC",
-      "price": "876",
-      "previousPrice": "765",
-      "exchange": "NYSE",
-      "favorite": "false",
-      "id": "4"
-    },
-    {
-      "id": "2d45",
-      "stockName": "123",
-      "stockCode": "123",
-      "stockPrice": "0123",
-      "stockPreviousPrice": 0,
-      "stockExchange": "NYSE",
+      "id": "464d",
+      "name": "1234",
+      "code": "124",
+      "price": "01234",
+      "previousPrice": 0,
+      "exchange": "OKX",
       "favorite": true
     },
     {
-      "id": "effe",
-      "stockName": "123",
-      "stockCode": "123",
-      "stockPrice": "0123",
-      "stockPreviousPrice": 0,
-      "stockExchange": "NASDAQ",
-      "favorite": true
-    },
-    {
-      "id": "e845",
-      "stockName": "123",
-      "stockCode": "123",
-      "stockPrice": "0123123",
-      "stockPreviousPrice": 0,
-      "stockExchange": "NYSE",
-      "favorite": true
-    },
-    {
-      "id": "8f14",
-      "stockName": "123",
-      "stockCode": "123",
-      "stockPrice": "0123123",
-      "stockPreviousPrice": 0,
-      "stockExchange": "OKX",
-      "favorite": true
-    },
-    {
-      "id": "0875",
-      "stockName": "213",
-      "stockCode": "123",
-      "stockPrice": "0123",
-      "stockPreviousPrice": 0,
-      "stockExchange": "NYSE",
+      "id": "f1bb",
+      "name": "123123",
+      "code": "123123",
+      "price": "123123",
+      "previousPrice": 0,
+      "exchange": "NASDAQ",
       "favorite": true
     }
   ],

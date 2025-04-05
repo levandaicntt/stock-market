@@ -1,6 +1,6 @@
 <ul>
     <li class="stock-item">
-        <div class="single-row">
+        <div class="single-row" (click)="goToDetails(stock.id)">
             <div class="name">{{ stock.name }}</div>
             <div class="code">{{ stock.code }}</div>
             <div class="exchange">{{ stock.exchange }}</div>
